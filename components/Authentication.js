@@ -90,7 +90,7 @@ export default function Authentication(props) {
         wallet: address,
         name: userInfo.name ?? '',
       };
- 
+
       const holding = await rpc.getNFT()
       if (holding === true) {
         alert('Welcome Anon :)')
@@ -107,34 +107,33 @@ export default function Authentication(props) {
     if (web3auth) {
       await web3auth.logout();
     }
-     setAuth(false);
+    setAuth(false);
   }, [web3auth]);
 
   return (
-    <div>
-      {isLoading === true ? (
-        <button type="button" class="bg-indigo-600 ..." disabled>
-          <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
-          </svg>
-          Processing
-        </button>) : (
+    <div style={{
+      paddingTop: '20px'
+    }}>
+      {isLoading === true ? (<>
+        </> ) : (
         <>
           {auth ? (
             <div dir="rtl">
-              <button disabled={isLoading} class="inline-flex items-center h-10 px-5 text-green-100 transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-800">
-                <span>{userAddress} </span>
-                <svg class="w-4 h-4 ml-3 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
-              </button>
-              <button dir="rtl" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+              <button dir="rtl" className="rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
                 onClick={logout} disabled={isLoading} variant="outlined">
                 logout
               </button>
+              <button disabled={isLoading} class="rounded-full inline-flex items-center h-10 px-5 text-green-100 transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-800">
+                <span>{userAddress} </span>
+                <svg class="w-4 h-4 ml-3 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+              </button>
+
             </div>
           ) : (
             <div dir="rtl">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={login} disabled={isLoading} variant="outlined">
-              login
-            </button>
+              <button className="rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={login} disabled={isLoading} variant="outlined">
+                login
+              </button>
             </div>
 
           )}
