@@ -2,8 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Authentication from './../components/Authentication';
-
+import {useRouter} from "next/router";
 export default function Home(props) {
+  const router = useRouter();
   const { isAuth, role } = props;
   return (
     <div className={styles.container}>
@@ -35,7 +36,7 @@ export default function Home(props) {
               <td>Malcolm Lockyer</td>
               <td>1961</td>
               <td>
-                <button className="rounded-full">
+                <button className="rounded-full" onClick={()=>router.push('/game')}>
                   <span> play</span>
                 </button>
               </td>
