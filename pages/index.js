@@ -19,7 +19,7 @@ export default function Home(props) {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <table class="table-auto">
+        <table className="table-auto">
           <thead>
             <tr>
               <th>Song</th>
@@ -35,7 +35,7 @@ export default function Home(props) {
               <td>Malcolm Lockyer</td>
               <td>1961</td>
               <td>
-                <button class="rounded-full">
+                <button className="rounded-full">
                   <span> play</span>
                 </button>
               </td>
@@ -45,7 +45,7 @@ export default function Home(props) {
               <td>The Eagles</td>
               <td>1972</td>
               <td>
-                <button class="rounded-full">
+                <button className="rounded-full">
                   <h1> play</h1>
                 </button>
               </td>
@@ -56,7 +56,7 @@ export default function Home(props) {
               <td>Earth, Wind, and Fire</td>
               <td>1975</td>
               <td>
-                <button class="rounded-full">
+                <button className="rounded-full">
                   <h1> play</h1>
                 </button>
               </td>
