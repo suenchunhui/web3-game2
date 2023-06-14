@@ -44,7 +44,7 @@ export default function Browse(props) {
             </Head>
             <main className={styles.main}>
                 <Box padding={4}>
-                    <Heading>Select Song</Heading>
+                    <Heading fontSize={{ base: '2xl', md: '3xl' }}>Leaderboard</Heading>
                     <Box overflowY="auto" maxHeight="500px" className={"max-w-4xl"}>
                         <Table variant="striped" colorScheme="teal">
                             <Thead position="sticky" top={0} bgColor="grey" zIndex={1}>
@@ -60,7 +60,7 @@ export default function Browse(props) {
                                     // eslint-disable-next-line react/jsx-key
                                     <Tr _hover={{ transform: "scale(1.05)" ,boxShadow: "base"}}
                                         transition="all 0.2s ease-out"
-                                        overflow="hidden">
+                                        overflow="clip">
                                         <Td>{index+1}</Td>
                                         <Td>{user}</Td>
                                         <Td>{address}</Td>
