@@ -1,4 +1,4 @@
-import {Box, SimpleGrid, Card, CardHeader,Heading,CardBody,Text, CardFooter,Button, Image} from "@chakra-ui/react";
+import {Box, SimpleGrid, Card, CardHeader,Heading,CardBody,Text, CardFooter,Button, Image, Checkbox} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
 import Authentication from "../components/Authentication";
 import Head from "next/head";
@@ -15,7 +15,7 @@ export default function mintSong(props) {
             </Head>
         <div className={styles.container}>
             <main className={styles.main}>
-                <Box  className={"max-w-4xl max-h-screen hover:text-black"}            >
+                <Box  className={"max-w-4xl hover:text-black min-w-600"}            >
                     <SimpleGrid spacing={10} row={1} columns={3}>
                         <Card _hover={{ transform: "scale(1.10)" }}
                               transition="all 0.2s ease-out"
@@ -29,7 +29,7 @@ export default function mintSong(props) {
                                 <Text>View a summary of all your customers over the last month.</Text>
                             </CardBody>
                             <CardFooter>
-                                <Button>View here</Button>
+                                <Checkbox size={"lg"}>Select</Checkbox>
                             </CardFooter>
                         </Card>
                         <Card _hover={{ transform: "scale(1.10)" }}
@@ -44,7 +44,7 @@ export default function mintSong(props) {
                                 <Text>View a summary of all your customers over the last month.</Text>
                             </CardBody>
                             <CardFooter>
-                                <Button>View here</Button>
+                                <Checkbox size={"lg"}>Select</Checkbox>
                             </CardFooter>
                         </Card>
                         <Card _hover={{ transform: "scale(1.10)" }}
@@ -59,7 +59,7 @@ export default function mintSong(props) {
                                 <Text>View a summary of all your customers over the last month.</Text>
                             </CardBody>
                             <CardFooter>
-                                <Button>View here</Button>
+                                <Checkbox size={"lg"}>Select</Checkbox>
                             </CardFooter>
                         </Card>
                     </SimpleGrid>
