@@ -54,7 +54,9 @@ export default function Browse(props) {
                             <Tbody>
                                 {data.map(({song, genre }) => (
                                     // eslint-disable-next-line react/jsx-key
-                                    <Tr>
+                                    <Tr _hover={{ transform: "scale(1.05)" ,boxShadow: "base"}}
+                                        transition="all 0.2s ease-out"
+                                        overflow="hidden">
                                         <Td>{song}</Td>
                                         <Td>{genre}</Td>
                                         <Td><Button></Button></Td>
