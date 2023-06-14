@@ -15,11 +15,14 @@ export default function mintSong(props) {
             </Head>
         <div className={styles.container}>
             <main className={styles.main}>
-                <Box  className={"max-w-4xl max-h-screen hover:text-black"}>
+                <Box  className={"max-w-4xl max-h-screen hover:text-black"}            >
                     <SimpleGrid spacing={10} row={1} columns={3}>
-                        <Card >
+                        <Card _hover={{ transform: "scale(1.10)" }}
+                              transition="all 0.2s ease-out"
+                              display="inline-block"
+                              overflow="hidden" >
                             <CardHeader>
-                                <Image borderRadius='10%' src={'https://nationaltoday.com/wp-content/uploads/2022/08/4568128-min-1.jpg'} boxsize='200px' alt='placeholder'></Image>
+                                    <Image borderRadius='10%' src={'https://nationaltoday.com/wp-content/uploads/2022/08/4568128-min-1.jpg'} boxsize='200px' alt='placeholder'/>
                                 <Heading size='md' className={"my-2"}> Customer dashboard</Heading>
                             </CardHeader>
                             <CardBody>
@@ -29,7 +32,10 @@ export default function mintSong(props) {
                                 <Button>View here</Button>
                             </CardFooter>
                         </Card>
-                        <Card>
+                        <Card _hover={{ transform: "scale(1.10)" }}
+                                    transition="all 0.2s ease-out"
+                                    display="inline-block"
+                                    overflow="hidden" >
                             <CardHeader>
                                 <Image borderRadius='10%' src={'https://upload.wikimedia.org/wikipedia/en/b/b0/Yoasobi_-_Idol.png'} boxsize='200px' alt='placeholder'></Image>
                                 <Heading size='md' className={"my-2"}> Customer dashboard</Heading>
@@ -41,7 +47,10 @@ export default function mintSong(props) {
                                 <Button>View here</Button>
                             </CardFooter>
                         </Card>
-                        <Card>
+                        <Card _hover={{ transform: "scale(1.10)" }}
+                              transition="all 0.2s ease-out"
+                              display="inline-block"
+                              overflow="hidden" >
                             <CardHeader>
                                 <Image borderRadius='10%' src={'https://upload.wikimedia.org/wikipedia/en/a/a6/Fifty_Fifty_-_The_Beginning_Cupid.png'} boxsize='200px' alt='placeholder'></Image>
                                 <Heading size='md' className={"my-2"}> Customer dashboard</Heading>
