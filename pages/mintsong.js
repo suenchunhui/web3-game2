@@ -2,7 +2,6 @@ import {Box, SimpleGrid, Card, CardHeader,Heading,CardBody,Text, CardFooter,Butt
 import styles from "../styles/Home.module.css";
 import Authentication from "../components/Authentication";
 import Head from "next/head";
-import PixiCanvas from "../components/PixiCanvas";
 export default function mintSong(props) {
     const { isAuth, role } = props;
     return(
@@ -32,13 +31,14 @@ export default function mintSong(props) {
                                 <Checkbox size={"lg"}>Select</Checkbox>
                             </CardFooter>
                         </Card>
-                        <Card _hover={{ transform: "scale(1.10)" }}
+                        <Card _hover={{ transform: "scale(1.10)" ,boxShadow: "base"}}
                                     transition="all 0.2s ease-out"
                                     display="inline-block"
-                                    overflow="hidden" >
+                                    overflow="hidden"
+                        >
                             <CardHeader>
                                 <Image borderRadius='10%' src={'https://upload.wikimedia.org/wikipedia/en/b/b0/Yoasobi_-_Idol.png'} boxsize='200px' alt='placeholder'></Image>
-                                <Heading size='md' className={"my-2"}> Customer dashboard</Heading>
+                                <Heading size='md' classNameΩ={"my-2"}> Customer dashboard</Heading>
                             </CardHeader>
                             <CardBody>
                                 <Text>View a summary of all your customers over the last month.</Text>
