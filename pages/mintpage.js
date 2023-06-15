@@ -23,10 +23,11 @@ export default function mintpage(props) {
     }, [isLoading, provider])
 
     async function mintNFT(_localProvider) {
-        let woddsNFT = new web3.eth.Contract(woddsABI.address, woddsABI.abi, _localProvider)
-        let tx = await woddsNFT.payToMint()
-        await tx.wait(2)
-        console.log(tx)
+        const web3 = new Web3(provider);
+
+        let woddsNFT = new web3.eth.Contract(woddsABI.abi,woddsABI.address)
+        let tx = await woddsNFT.methods.payToMint().send({from:'0xDD3f121CCD6044Cb39295F502A5E866212b2F18a'})
+         console.log(tx)
     }
 
     return (
