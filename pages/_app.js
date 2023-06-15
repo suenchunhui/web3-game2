@@ -4,6 +4,8 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react'
+import Authentication from "../components/Authentication";
+import NavBar from "../components/NavBar";
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const config = {
@@ -17,6 +19,8 @@ export const theme = extendTheme({ config })
 function MyApp({ Component, pageProps }) {
     return (
         <ChakraProvider theme={theme}>
+            <NavBar/>
+            <Authentication/>
             <Component {...pageProps} />
         </ChakraProvider>
     )
