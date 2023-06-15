@@ -24,7 +24,8 @@ class Game {
   }
 
   startGame() {
-    this.addMusic();
+    let src = 'https://s3-us-west-1.amazonaws.com/js-hero-guitar-hero-clone/sweet_child_o_mine.mp3';
+    this.addMusic(src);
     this.gameView.addMovingNotes(this.noteInterval);
     this.gameStartEl.className = "start hidden";
     this.started = true;
@@ -71,8 +72,8 @@ class Game {
     this.gameView.setup();
   }
 
-  addMusic() {
-    this.music = new Audio(this.musicDelay);
+  addMusic(src) {
+    this.music = new Audio(src, this.musicDelay);
     this.music.startMusic();
     setTimeout(this.music.fadeOut.bind(this.music), 213000);
   }
