@@ -8,6 +8,20 @@ import { useWeb3Auth } from "../context/web3auth";
 import Main from "../components/main";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
+import Modal from 'react-modal';
+import { FaSpinner } from 'react-icons/fa';
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: 'rgba(0, 0, 0, 0.75)'
+    }
+};
+
 
 export default function mintpage(props) {
     const { isAuth, role } = props;
@@ -15,14 +29,17 @@ export default function mintpage(props) {
     const [localProvider, setProvider] = useState(null);
     const [userAddress, setUserAddress] = useState('null')
     const [show, setShow] = useState(false)
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [txHash, setTxHash] = useState('');
+    const [loadingTX, setloadingTX] = useState('');
 
     useEffect(() => {
 
         const timeout = setTimeout(() => {
             setShow(true)
             fetchData()
-          }, 3000)
-      
+        }, 3000)
+
 
         const fetchData = async () => {
             //   console.log(pureProvider)
@@ -34,18 +51,29 @@ export default function mintpage(props) {
         }
         return () => clearTimeout(timeout)
 
-    }, [isLoading, show ])
+    }, [isLoading, show])
 
     async function mintNFT(_localProvider) {
-        // console.log(provider)
+        console.log(provider)
         let woddsNFT = await createContract(woddsABI.abi, woddsABI.address)
-
-
+        setloadingTX(true)
         //const web3 = new Web3(_localProvider);
-
         // let woddsNFT = new web3.eth.Contract(woddsABI.abi, woddsABI.address)
         let tx = await woddsNFT.methods.payToMint().send({ from: userAddress });
         console.log(tx)
+        setTxHash(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
+        // Open the modal
+        setIsOpen(true);
+        setloadingTX(false)
+
+    }
+
+
+
+    const closeModal = () => {
+        // Close the modal and reset txHash state
+        setIsOpen(false);
+        setTxHash('');
     }
 
     return (
@@ -75,9 +103,16 @@ export default function mintpage(props) {
                             </Card>
 
                             <Button onClick={() => mintNFT(localProvider)}
-                                style={{ marginTop: '140px' }} className={"max-w-4xl my-10"}> Mint Words</Button>
+                                style={{ marginTop: '140px' }} className={"max-w-4xl my-10"}> Mint Words
+                                {loadingTX && <div className="loader"><FaSpinner className="spinner" /></div>}
+                            </Button>
 
                         </SimpleGrid>
+                        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+                            <h2>Transaction Hash:</h2>
+                            <p>{txHash}</p>
+                            <button onClick={closeModal}>Close</button>
+                        </Modal>
                     </Box>
                 </main>
             </div>
