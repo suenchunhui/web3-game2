@@ -1,6 +1,6 @@
 
-import React, { useState, } from "react";
-import {Heading, Image} from "@chakra-ui/react";
+import React, {useEffect, useState,} from "react";
+import {Heading, Image, Input, useToast} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
 
 export default function Oracle(props) {
@@ -8,7 +8,19 @@ export default function Oracle(props) {
     const [input, setInput] = useState("");
     const [output, setOutput] = useState("");
     const [numWords,setNumWords] = useState("200")
-
+    const [password, setPassword] = useState("");
+const toast =             useToast()
+    useEffect(() => {
+        if (password === "codeword") {
+            toast({
+                title: 'Password correct!',
+                description: "Good job! You are the first on the leaderboard, out of 400!",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        }
+    }, [password]);
     const generateResponse = async (e,currentIntensity) => {
         e.preventDefault();
         setOutput("");
@@ -116,7 +128,16 @@ export default function Oracle(props) {
 
                     </div>
                 )}
+                <Input
+                    type="text"
+                    isInvalid
+                    errorBorderColor='teal'
+                    placeholder="Enter the password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
             </div>
+
         </div>
         </div>
         </div>
