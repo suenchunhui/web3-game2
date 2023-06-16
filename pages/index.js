@@ -25,7 +25,7 @@ export default function Home(props) {
         <h1 className={styles.title}>Introduction</h1> 
         <div className={styles.description}>Welcome to the NFT Password Challenge! <br/>
           Guess the secret password and win awesome prizes. <br/>
-          The twist? You'll need to create your own NFT to get random words for clues. <br/>
+          The twist? You&apos;ll need to create your own NFT to get random words for clues. <br/>
           Get ready for a thrilling game of code-breaking and big rewards!</div>
 
         <h1 className={styles.title}>Game Overview</h1>
