@@ -9,12 +9,30 @@ export default function Oracle(props) {
     const [output, setOutput] = useState("");
     const [numWords,setNumWords] = useState("200")
     const [password, setPassword] = useState("");
-    const words = [  "Who", "When", "Where", "How", "What", "Living", "Building", "Book", "Table",
-        "Chair", "Dog", "Cat", "Car", "Phone", "Computer", "House", "Food", "Water",
-        "Time", "Money", "Child", "Friend", "Music", "City", "School", "Tree", "Sun",
-        "Cyberpunk", "Love", "Animal", "Insect", "Household",];
+    const [isValid, setIsValid] = useState(false);
+    const words = [
+        "What is the category of this ____?",
+        "Can the word be found in a ____?",
+        "Is the word related to technology or ____?",
+        "Can the word be eaten or ____?",
+        "Is the word something you can ____?",
+        "Is the word associated with a specific ____?",
+        "Can the word be used in a ____?",
+        "Does the word represent an emotion or ____?",
+        "Is the word a type of ____?",
+        "Does the word have a connection to ____?",
+        "Can you find the word in a ____?"
+    ];
     const colors = ["teal", "blue", "green", "red", "yellow", "purple", "pink", "cyan"];
-    const freeWords = ["Password", "is", "a", "the", "was", "were"]
+    useEffect (() => {
+        const inArray = words.some(sentence => {
+            // replace the blank with a regular expression that matches any word
+            const sentenceRegex = new RegExp(sentence.replace('____', '\\w+\\?') + '$');
+            return sentenceRegex.test(input);
+        });
+        console.log(inArray);
+        setIsValid(inArray);
+    })
     const [buttonClicked, setButtonClicked] = useState(Array(words.length).fill(false));
 const toast =             useToast()
     useEffect(() => {
@@ -40,6 +58,7 @@ const toast =             useToast()
         e.preventDefault();
         setOutput("");
         setLoading(true);
+
         const prompt = `${input}`;
         //alert(prompt);
         const response = await fetch("/api/routes", {
@@ -93,14 +112,17 @@ const toast =             useToast()
                             <label htmlFor="keywords" className="sr-only">
                                 Context
                             </label>
-                            <textarea
+                            <Input
+                                isInvalid
+                                errorBorderColor={"white"}
+                                color={isValid? "teal":"crimson"}
                                 rows={3}
                                 value={input}
-                                onChange={(e) => setInput(e.target.value)}
+                                onChange={(e) => {setInput(e.target.value);}}
                                 name="keyWords"
                                 id="keyWords"
                                 placeholder="Ask Away!"
-                                className="block w-full rounded-md bg-white border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-gray-900"
+                                className="block w-full rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-white"
 
                             />
                         </div>
@@ -109,11 +131,6 @@ const toast =             useToast()
                         !buttonClicked[index] &&( <Tag key={index} onClick={() => handleButtonClick(word,index)} colorScheme={getRandomColor()} size={"lg"} m={2}>
                             {word}
                         </Tag>)
-                    ))}
-                    {freeWords.map((word, index) => (
-                    <Tag key={index} onClick={() => handleButtonClick(word)} colorScheme={getRandomColor()} size={"lg"} m={2}>
-                    {word}
-                </Tag>
                     ))}
                 </div>
                 {!loading ? (
