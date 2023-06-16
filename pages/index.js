@@ -11,7 +11,7 @@ import {useEffect, useState} from "react";
 export default function Home(props) {
   const router = useRouter();
   const { isAuth, role } = props;
- 
+  
 
   return (
     <div className={styles.container}>

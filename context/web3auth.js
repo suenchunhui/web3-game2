@@ -92,7 +92,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
           },
           chainConfig: currentChainConfig,
           // get your client id from https://dashboard.web3auth.io
-          clientId: 'BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk',
+          clientId: process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
         });
 
         const adapter = new OpenloginAdapter({ adapterSettings: { network: web3AuthNetwork } });
