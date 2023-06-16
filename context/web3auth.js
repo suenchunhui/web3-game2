@@ -5,6 +5,7 @@ import { getWalletProvider, } from "./walletProvider";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from '@web3auth/base';
 import { ethers } from "ethers";
+import Web3 from "web3";
 
 export const Web3AuthContext = createContext({
   web3Auth: null,
@@ -32,7 +33,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
   const [pureProvider, setpureProvider] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('Loading User.');
   const [isLoading, setIsLoading] = useState(false);
   const [_document, set_document] =useState(null)
 
@@ -50,12 +51,15 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
   );
 
   useEffect(() => {
-    const subscribeAuthEvents = (web3auth) => {
+    const subscribeAuthEvents =  (web3auth) => {
       // Can subscribe to all ADAPTER_EVENTS and LOGIN_MODAL_EVENTS
-      web3auth.on(ADAPTER_EVENTS.CONNECTED, (data) => {
+      web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data) => {
         console.log("Yeah!, you are successfully logged in", data);
-        setUser(data);
-        setWalletProvider(web3auth.provider);
+         setWalletProvider(web3auth.provider);
+         let _web3 = new Web3(web3auth.provider);
+         let _address = (await _web3.eth.getAccounts())[0];
+         console.log(_address)
+         setUser(_address)
       });
 
       web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
@@ -118,8 +122,8 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
     const localProvider = await web3Auth.connect();
     const _provider = new ethers.providers.Web3Provider(localProvider);
     setpureProvider(_provider);
+    setWalletProvider(_provider);  
 
-    setWalletProvider(_provider);
 
   };
 
@@ -210,7 +214,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       uiConsole("provider not initialized yet");
       return;
     }
-    return (provider.createContract(_abi, _address));
+    return (provider.createContract(_abi, _address,user));
   };
 
   const uiConsole = (...args) => {
