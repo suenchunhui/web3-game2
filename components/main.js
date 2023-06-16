@@ -3,11 +3,16 @@ import styles from "../styles/Home.module.css";
 import { WALLET_ADAPTERS } from "@web3auth/base";       //  <span>{userAddress} </span>
 import React, { useState, useEffect } from 'react'
 
+//...
+
+
 
 const Main = () => {
   const { provider, login, logout, user, isLoading, getAccounts, getBalance, signMessage, signTransaction, signAndSendTransaction, web3Auth, chain } = useWeb3Auth();
   const [userAddress, setUserAddress] = useState('null')
-  getAccounts().then( result => setUserAddress(result))
+  getAccounts().then(result => setUserAddress(result))
+
+
   const loggedInView = (
     <>
       <div dir="rtl">
@@ -27,7 +32,7 @@ const Main = () => {
 
 
     <div dir="rtl">
-      <button onClick={login} className="rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" disabled={isLoading} variant="outlined">
+      <button onClick={() => { login(); }} className="rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" disabled={isLoading} variant="outlined">
         login
       </button>
     </div>

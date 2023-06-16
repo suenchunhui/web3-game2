@@ -2,6 +2,7 @@ import { SafeEventEmitterProvider } from "@web3auth/base";
 import Web3 from "web3";
 import { IWalletProvider } from "./walletProvider";
 import { ethers } from "ethers";
+import { useRouter } from 'next/router'
 
 const ethProvider = (provider, uiConsole) => {
   //const ethersProvider = new ethers.providers.Web3Provider(provider);
@@ -36,6 +37,8 @@ const ethProvider = (provider, uiConsole) => {
         // safe to use the function
      //   return 'Loading..'
   // } else {
+
+  
         const address = (await web3.eth.getAccounts())[0];
         console.log(await web3.eth.getAccounts())
         return address;
