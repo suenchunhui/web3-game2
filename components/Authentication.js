@@ -93,10 +93,8 @@ export default function Authentication(props) {
 
       const holding = await rpc.getNFT()
       if (holding === true) {
-        alert('Welcome Anon :)')
         setAuth(true);
       } else {
-        alert('Mint @ :')
         setAuth(true);
       }
 
