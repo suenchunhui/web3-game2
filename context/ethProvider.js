@@ -31,33 +31,32 @@ const ethProvider = (provider, uiConsole) => {
   const getAccounts = async () => {
     try {
       console.log(provider)
+      if (!provider) {
+        return;
+      }
       const web3 = new Web3(provider);
       // Get user's Ethereum public address
-   //  if (typeof web3.eth.getAccounts !== "undefined") {
-        // safe to use the function
-     //   return 'Loading..'
-  // } else {
-
-  
-        const address = (await web3.eth.getAccounts())[0];
-        console.log(await web3.eth.getAccounts())
-        return address;
-  //    }
+       if (typeof web3.eth.getAccounts !== "undefined") {
+       //safe to use the function
+        return 'Loading..'
+       } else {
+      const address = (await web3.eth.getAccounts())[0];
+      console.log(await web3.eth.getAccounts())
+      return address;
+        }
     } catch (error) {
       console.error("Error", error);
       uiConsole("error", error);
     }
   };
-  const createContract = async (_abi, _address) => {
+  const createContract = async (_abi, _address,_userAddress) => {
     try {
       if (!provider) {
 
       } else {
         const web3 = new Web3(provider);
         // Get user's Ethereum public address
-        web3.eth.defaultAccount = (await web3.eth.getAccounts())[0];
-
-        var contract = new web3.eth.Contract(_abi, _address);
+        var contract = new web3.eth.Contract(_abi, _address,_userAddress);
         return contract;
       }
 

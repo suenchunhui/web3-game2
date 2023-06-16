@@ -7,7 +7,7 @@ export default function Logo(props) {
             <SimpleGrid columns={2}>
                 <Image src={'icon.png'} boxSize={"50px"}/>
             <Text fontSize="lg" fontWeight="bold">
-                Minstrel`s Rhythm
+                Guess the Word
             </Text>
             </SimpleGrid>
         </Box>

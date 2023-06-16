@@ -77,6 +77,8 @@ const MenuLinks = ({ isOpen }) => {
                 <MenuItem to="/">Home</MenuItem>
                 <MenuItem to="/mintpage">Mint Words</MenuItem>
                 <MenuItem to="/oracle">Guess the password</MenuItem>
+                <MenuItem to="/displayNFT">Display NFT</MenuItem>
+
                 <Main></Main>
             </Stack>
         </Box>
