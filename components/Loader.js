@@ -1,6 +1,4 @@
-import { FunctionComponent } from "react";
-
-const Loader: FunctionComponent = () => {
+const Loader = () => {
   return <h1>Loading....</h1>;
 };
 

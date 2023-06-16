@@ -1,7 +1,7 @@
 import { ADAPTER_EVENTS, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
 import { createContext, FunctionComponent, ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { getWalletProvider,  } from "./walletProvider";
+import { getWalletProvider, } from "./walletProvider";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from '@web3auth/base';
 import { ethers } from "ethers";
@@ -12,16 +12,16 @@ export const Web3AuthContext = createContext({
   isLoading: false,
   user: null,
   chain: "",
-  login: async () => {},
-  logout: async () => {},
-  getUserInfo: async () => {},
-  signMessage: async () => {},
-  getAccounts: async () => {},
-  getBalance: async () => {},
-  signTransaction: async () => {},
-  signAndSendTransaction: async () => {},
-  addChain: async () => {},
-  switchChain: async () => {},
+  login: async () => { },
+  logout: async () => { },
+  getUserInfo: async () => { },
+  signMessage: async () => { },
+  getAccounts: async () => { },
+  getBalance: async () => { },
+  signTransaction: async () => { },
+  signAndSendTransaction: async () => { },
+  addChain: async () => { },
+  switchChain: async () => { },
 });
 
 export function useWeb3Auth() {
@@ -34,6 +34,12 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
   const [pureProvider, setpureProvider] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [_document, set_document] = React.useState(null)
+
+  React.useEffect(() => {
+    set_document(document)
+  }, [])
+
 
   const setWalletProvider = useCallback(
     (web3authProvider) => {
@@ -66,16 +72,16 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       });
     };
 
-    const currentChainConfig ={
+    const currentChainConfig = {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
       chainId: '0x5',
-      rpcTarget:  `https://goerli.infura.io/v3/a9bb5c9d68494b7bb8f6af177490d9fb`
+      rpcTarget: `https://goerli.infura.io/v3/a9bb5c9d68494b7bb8f6af177490d9fb`
       //'https://rpc.ankr.com/eth',
     };
 
     async function init() {
       try {
- 
+
         setIsLoading(true);
         const web3AuthInstance = new Web3Auth({
           uiConfig: {
@@ -144,7 +150,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       uiConsole("provider not initialized yet");
       return;
     }
-  //  await provider.getAccounts()
+    //  await provider.getAccounts()
     return (await provider.getAccounts());
   };
 
@@ -154,7 +160,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       uiConsole("provider not initialized yet");
       return;
     }
-    return(await provider.getBalance());
+    return (await provider.getBalance());
   };
 
   const signMessage = async () => {
@@ -181,12 +187,12 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       uiConsole("provider not initialized yet");
       return;
     }
-  //  const ethersProvider = new ethers.providers.Web3Provider(provider);
+    //  const ethersProvider = new ethers.providers.Web3Provider(provider);
     const finalProvider = provider.getSigner();
     await finalProvider();
   };
 
-  
+
 
 
   const signAndSendTransaction = async () => {
@@ -198,17 +204,17 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
     await provider.signAndSendTransaction();
   };
 
-  const createContract = async (_abi,_address) => {
+  const createContract = async (_abi, _address) => {
     if (!provider) {
       console.log("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    return(provider.createContract(_abi,_address));
+    return (provider.createContract(_abi, _address));
   };
 
   const uiConsole = (...args) => {
-    const el = document.querySelector("#console>p");
+    const el = _document.querySelector("#console>p");
     if (el) {
       el.innerHTML = JSON.stringify(args || {}, null, 2);
     }

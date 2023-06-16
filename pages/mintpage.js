@@ -26,7 +26,7 @@ const customStyles = {
 };
 
 
-export default function mintpage(props) {
+export default function Mintpage(props) {
     const { isAuth, role } = props;
     const { web3Auth, provider, isLoading, createContract, getAccounts, pureProvider } = useWeb3Auth()
     const [localProvider, setProvider] = useState(null);
@@ -54,7 +54,7 @@ export default function mintpage(props) {
         }
         return () => clearTimeout(timeout)
 
-    }, [isLoading, show])
+    }, [getAccounts,provider,pureProvider,isLoading, show])
 
     async function mintNFT(_localProvider) {
         console.log(provider)
