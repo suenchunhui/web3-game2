@@ -20,8 +20,6 @@ export default function Home(props) {
         <meta name="description" content="Crack the NFT Password" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Main></Main>
-
       <main className={styles.main}>
 
         <h1 className={styles.title}>Introduction</h1> 

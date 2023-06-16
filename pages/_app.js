@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 // pages/_app.js
 import { ChakraProvider } from '@chakra-ui/react'
+import NavBar from "../components/NavBar";
 
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react'
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <Web3AuthProvider chain={"testnet"} web3AuthNetwork={"testnet"}>
             <ChakraProvider theme={theme}>
+                 <NavBar/>
                 <Component {...pageProps} />
             </ChakraProvider>
         </Web3AuthProvider>

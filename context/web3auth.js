@@ -34,7 +34,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
   const [pureProvider, setpureProvider] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [_document, set_document] = useState(null)
+  const [_document, set_document] =useState(null)
 
   useEffect(() => {
     set_document(document)
@@ -214,11 +214,11 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
   };
 
   const uiConsole = (...args) => {
-    console.log(args);
-    // const el = _document.querySelector("#console>p");
-    // if (el) {
-    //   el.innerHTML = JSON.stringify(args || {}, null, 2);
-    // }
+    console.log(args)
+    //const el = _document.querySelector("#console>p");
+  //  if (el) {
+  //    el.innerHTML = JSON.stringify(args || {}, null, 2);
+  //  }
   };
 
   const contextProvider = {
