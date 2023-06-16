@@ -13,33 +13,38 @@ interface IsongsNFT {
 
 contract wordsNFT is ERC1155Burnable, Ownable
 { 
-    uint256 public constant GOLD = 0;
-    uint256 public constant SILVER = 1;
-    uint256 public constant THORS_HAMMER = 2;
-    uint256 public constant SWORD = 3;
-    uint256 public constant SHIELD = 4;
 
-    string[] public mnemonics = ["The","Wooden", "Love", "Ship", "Geniuses", "Wonderful", "Happy"];
+    uint256 public constant price = 0.01 ether;
+
+    string[] public mnemonics = [
+        "Can the word be found in a __?",
+        "Is the word related to technology or __?",
+        "Can the word be eaten or __?",
+        "Is the word something you can __?",
+        "Is the word associated with a specific __?",
+        "Can the word be used in a __?",
+        "Does the word represent an emotion or __?",
+        "Is the word a type of __?",
+        "Does the word have a connection to __?"
+        ];
     mapping(uint256 => string) public _words;
     using Strings for uint256;
     event burnedWords( string[] );
     address public songsAddress;
 
-    constructor() public ERC1155("https://game.example/api/item/{id}.json") {
-     }
+    constructor() ERC1155("") {
+    }
 
     function setupSongsNFT( address _songsAddress) public onlyOwner{
         songsAddress = _songsAddress;
     }
 
     function payToMint() external payable {
-        
-    uint256 salt = 3;
-     for (uint256 i=0; i < 6; ++i) {
-        uint256 random =  (block.timestamp * salt * i) % mnemonics.length;
-        console.log(random);
-        _mint(msg.sender, i, 1, "");
-        }
+        require(msg.value >= price);
+
+        uint256 random = uint256(keccak256(abi.encodePacked("gaming", block.timestamp))) % mnemonics.length;
+        _mint(msg.sender, random, 1, "");
+
         // Send ETH back..
         address payable _newAddress = payable(msg.sender);
         _newAddress.transfer(msg.value); 
@@ -65,7 +70,7 @@ contract wordsNFT is ERC1155Burnable, Ownable
         emit burnedWords(_symbolStrings);
     }
 
-    function tokenURL(uint256 _tokenId) external view returns (string memory) {
+    function uri(uint256 _tokenId) public override view returns (string memory) {
        // (string memory _symbolString) =this._words(_tokenId);
         string memory _symbolString = mnemonics[_tokenId];
         return
@@ -97,7 +102,7 @@ contract wordsNFT is ERC1155Burnable, Ownable
                     abi.encodePacked(
                         '<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">',
                         '<rect id="rectangle" height="500" width="500" rx="25" ry="25"/>',
-                        '<text x="50%" y="52%" font-weight="bold" font-family="Monospace" dominant-baseline="middle" fill="hsl(206, 100%, 36%)" text-anchor="middle" font-size="60">',
+                        '<text x="50%" y="52%" font-weight="bold" font-family="Monospace" dominant-baseline="middle" fill="hsl(206, 100%, 36%)" text-anchor="middle" font-size="15">',
                         _name,
                         "</text>"
                         "</svg>"
