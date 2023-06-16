@@ -1,25 +1,89 @@
 import { SafeEventEmitterProvider } from "@web3auth/base";
 import Web3 from "web3";
 import { IWalletProvider } from "./walletProvider";
+import { ethers } from "ethers";
 
 const ethProvider = (provider, uiConsole) => {
-  const getAccounts = async () => {
+  //const ethersProvider = new ethers.providers.Web3Provider(provider);
+  //const finalProvider = ethersProvider.getSigner();
+
+
+  const getSigner = async () => {
     try {
+      const ethersProvider = new ethers.providers.Web3Provider(provider);
+      const finalProvider = ethersProvider.getSigner();
+      /*
       const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      uiConsole("Eth accounts", accounts);
+      const Signers = await ethers.getSigners();
+      const deployerAddress = Signers[0].address;
+      const realSigner = await ethers.getSigner(Signers[0].address);
+      // Get user's Ethereum public address
+      const address = (await web3.eth.getAccounts())[0];
+*/
+      return finalProvider;
     } catch (error) {
       console.error("Error", error);
       uiConsole("error", error);
     }
   };
 
+  const getAccounts = async () => {
+    try {
+      console.log(provider)
+      const web3 = new Web3(provider);
+      // Get user's Ethereum public address
+   //  if (typeof web3.eth.getAccounts !== "undefined") {
+        // safe to use the function
+     //   return 'Loading..'
+  // } else {
+        const address = (await web3.eth.getAccounts())[0];
+        console.log(await web3.eth.getAccounts())
+        return address;
+  //    }
+    } catch (error) {
+      console.error("Error", error);
+      uiConsole("error", error);
+    }
+  };
+  const createContract = async (_abi, _address) => {
+    try {
+      if (!provider) {
+
+      } else {
+        const web3 = new Web3(provider);
+        // Get user's Ethereum public address
+        web3.eth.defaultAccount = (await web3.eth.getAccounts())[0];
+
+        var contract = new web3.eth.Contract(_abi, _address);
+        return contract;
+      }
+
+    } catch (error) {
+      console.error("Error", error);
+      uiConsole("error", error);
+    }
+  };
+
+  const getChainId = async () => {
+    try {
+      const ethersProvider = new ethers.providers.Web3Provider(provider);
+      // Get the connected Chain's ID
+      const networkDetails = await ethersProvider.getNetwork();
+
+      return networkDetails.chainId;
+    } catch (error) {
+      return error;
+    }
+  }
+
   const getBalance = async () => {
     try {
       const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      const balance = await web3.eth.getBalance(accounts[0]);
-      uiConsole("Eth balance", balance);
+
+      // Get user's Ethereum public address
+      const address = (await web3.eth.getAccounts())[0];
+      let balance = await web3.eth.getBalance(address)
+      return balance;
     } catch (error) {
       console.error("Error", error);
       uiConsole("error", error);
@@ -27,34 +91,22 @@ const ethProvider = (provider, uiConsole) => {
   };
 
   const signMessage = async () => {
-    try {
-      const pubKey = (await provider.request({ method: "eth_accounts" }));
-      const web3 = new Web3(provider);
-      const message = "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad";
-      (web3.currentProvider)?.send(
-        {
-          method: "eth_sign",
-          params: [pubKey[0], message],
-          from: pubKey[0],
-        },
-        (err, result) => {
-          if (err) {
-            return uiConsole(err);
-          }
-          uiConsole("Eth sign message => true", result);
-        }
-      );
-    } catch (error) {
-      console.log("error", error);
-      uiConsole("error", error);
-    }
+    const ethersProvider = new ethers.providers.Web3Provider(provider);
+    const signer = ethersProvider.getSigner();
+
+    const originalMessage = "YOUR_MESSAGE";
+
+    // Sign the message
+    const signedMessage = await signer.signMessage(originalMessage);
+
+    return signedMessage;
   };
 
   const signAndSendTransaction = async () => {
     try {
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
-     
+
       const txRes = await web3.eth.sendTransaction({
         from: accounts[0],
         to: accounts[0],
@@ -66,7 +118,7 @@ const ethProvider = (provider, uiConsole) => {
       uiConsole("error", error);
     }
   };
-  
+
   const signTransaction = async () => {
     try {
       const web3 = new Web3(provider);
@@ -85,7 +137,7 @@ const ethProvider = (provider, uiConsole) => {
       uiConsole("error", error);
     }
   };
-  return { getAccounts, getBalance, signMessage, signAndSendTransaction, signTransaction };
+  return { getAccounts, getBalance, signMessage, signAndSendTransaction, signTransaction, getSigner, createContract };
 };
 
 export default ethProvider;

@@ -1,18 +1,17 @@
 import { ADAPTER_EVENTS, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
 import { createContext, FunctionComponent, ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { CHAIN_CONFIG, CHAIN_CONFIG_TYPE } from "../config/chainConfig";
-import { WEB3AUTH_NETWORK_TYPE } from "../config/web3AuthNetwork";
 import { getWalletProvider,  } from "./walletProvider";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from '@web3auth/base';
+import { ethers } from "ethers";
 
 export const Web3AuthContext = createContext({
   web3Auth: null,
   provider: null,
   isLoading: false,
-  chain: "",
   user: null,
+  chain: "",
   login: async () => {},
   logout: async () => {},
   getUserInfo: async () => {},
@@ -21,6 +20,8 @@ export const Web3AuthContext = createContext({
   getBalance: async () => {},
   signTransaction: async () => {},
   signAndSendTransaction: async () => {},
+  addChain: async () => {},
+  switchChain: async () => {},
 });
 
 export function useWeb3Auth() {
@@ -30,8 +31,7 @@ export function useWeb3Auth() {
 export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
-  const [address, setAddress] = useState(null);
-
+  const [pureProvider, setpureProvider] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,7 +39,6 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
     (web3authProvider) => {
       const walletProvider = getWalletProvider(chain, web3authProvider, uiConsole);
       setProvider(walletProvider);
-      setAddress()
     },
     [chain]
   );
@@ -76,11 +75,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
 
     async function init() {
       try {
-        const clientId = {
-          testnet: "BHr_dKcxC0ecKn_2dZQmQeNdjPgWykMkcodEHkVvPMo71qzOV6SgtoN8KCvFdLN7bf34JOm89vWQMLFmSfIo84A",
-          mainnet: "BJRZ6qdDTbj6Vd5YXvV994TYCqY42-PxldCetmvGTUdoq6pkCqdpuC1DIehz76zuYdaq1RJkXGHuDraHRhCQHvA",
-          cyan: "BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk"
-        };
+ 
         setIsLoading(true);
         const web3AuthInstance = new Web3Auth({
           uiConfig: {
@@ -115,7 +110,11 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       return;
     }
     const localProvider = await web3Auth.connect();
-    setWalletProvider(localProvider);
+    const _provider = new ethers.providers.Web3Provider(localProvider);
+    setpureProvider(_provider);
+
+    setWalletProvider(_provider);
+
   };
 
   const logout = async () => {
@@ -135,6 +134,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       return;
     }
     const user = await web3Auth.getUserInfo();
+    setUser(user)
     uiConsole(user);
   };
 
@@ -144,7 +144,8 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.getAccounts();
+  //  await provider.getAccounts()
+    return (await provider.getAccounts());
   };
 
   const getBalance = async () => {
@@ -153,7 +154,7 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.getBalance();
+    return(await provider.getBalance());
   };
 
   const signMessage = async () => {
@@ -174,6 +175,20 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
     await provider.signTransaction();
   };
 
+  const getSigner = async () => {
+    if (!provider) {
+      console.log("provider not initialized yet");
+      uiConsole("provider not initialized yet");
+      return;
+    }
+  //  const ethersProvider = new ethers.providers.Web3Provider(provider);
+    const finalProvider = provider.getSigner();
+    await finalProvider();
+  };
+
+  
+
+
   const signAndSendTransaction = async () => {
     if (!provider) {
       console.log("provider not initialized yet");
@@ -183,7 +198,16 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
     await provider.signAndSendTransaction();
   };
 
-  const uiConsole = (..._string) => {
+  const createContract = async (_abi,_address) => {
+    if (!provider) {
+      console.log("provider not initialized yet");
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    return(provider.createContract(_abi,_address));
+  };
+
+  const uiConsole = (...args) => {
     const el = document.querySelector("#console>p");
     if (el) {
       el.innerHTML = JSON.stringify(args || {}, null, 2);
@@ -196,14 +220,17 @@ export const Web3AuthProvider = ({ children, web3AuthNetwork, chain }) => {
     provider,
     user,
     isLoading,
+    pureProvider,
     login,
     logout,
     getUserInfo,
     getAccounts,
     getBalance,
+    getSigner,
     signMessage,
     signTransaction,
     signAndSendTransaction,
+    createContract
   };
   return <Web3AuthContext.Provider value={contextProvider}>{children}</Web3AuthContext.Provider>;
 };

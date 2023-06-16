@@ -6,8 +6,8 @@ import React, { useState, useEffect } from 'react'
 
 const Main = () => {
   const { provider, login, logout, user, isLoading, getAccounts, getBalance, signMessage, signTransaction, signAndSendTransaction, web3Auth, chain } = useWeb3Auth();
-  const [userAddress, setUserAddress] = useState('0xDD3f121CCD6044Cb39295F502A5E866212b2F18a')
-  getAccounts().then( result => console.log(result))
+  const [userAddress, setUserAddress] = useState('null')
+  getAccounts().then( result => setUserAddress(result))
   const loggedInView = (
     <>
       <div dir="rtl">

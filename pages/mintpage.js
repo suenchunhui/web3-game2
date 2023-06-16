@@ -11,23 +11,41 @@ import Web3 from "web3";
 
 export default function mintpage(props) {
     const { isAuth, role } = props;
-    const { web3Auth,provider, isLoading } = useWeb3Auth()
+    const { web3Auth, provider, isLoading, createContract, getAccounts, pureProvider } = useWeb3Auth()
     const [localProvider, setProvider] = useState(null);
+    const [userAddress, setUserAddress] = useState('null')
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
-        if (isLoading == false) {
-            //  alert("GOT THERE");
-        } else {
-            setProvider(provider)
+
+        const timeout = setTimeout(() => {
+            setShow(true)
+            fetchData()
+          }, 3000)
+      
+
+        const fetchData = async () => {
+            //   console.log(pureProvider)
+            if (isLoading && !provider) { }
+            else {
+                setProvider(pureProvider)
+                getAccounts().then(result => setUserAddress(result))
+            }
         }
-    }, [isLoading, provider])
+        return () => clearTimeout(timeout)
+
+    }, [isLoading, show ])
 
     async function mintNFT(_localProvider) {
-        const web3 = new Web3(provider);
+        // console.log(provider)
+        let woddsNFT = await createContract(woddsABI.abi, woddsABI.address)
 
-        let woddsNFT = new web3.eth.Contract(woddsABI.abi,woddsABI.address)
-        let tx = await woddsNFT.methods.payToMint().send({from:'0xDD3f121CCD6044Cb39295F502A5E866212b2F18a'})
-         console.log(tx)
+
+        //const web3 = new Web3(_localProvider);
+
+        // let woddsNFT = new web3.eth.Contract(woddsABI.abi, woddsABI.address)
+        let tx = await woddsNFT.methods.payToMint().send({ from: userAddress });
+        console.log(tx)
     }
 
     return (
