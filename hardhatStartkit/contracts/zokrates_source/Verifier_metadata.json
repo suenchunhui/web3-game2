@@ -1,0 +1,182 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "winner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint32",
+						"name": "place",
+						"type": "uint32"
+					}
+				],
+				"name": "verifiedWinner",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "endSeason",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "prizeRatio",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "seasonPrize",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_answer",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_prizeCap",
+						"type": "uint256"
+					}
+				],
+				"name": "startSeason",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "X",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "Y",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct Pairing.G1Point",
+								"name": "a",
+								"type": "tuple"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint256[2]",
+										"name": "X",
+										"type": "uint256[2]"
+									},
+									{
+										"internalType": "uint256[2]",
+										"name": "Y",
+										"type": "uint256[2]"
+									}
+								],
+								"internalType": "struct Pairing.G2Point",
+								"name": "b",
+								"type": "tuple"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "X",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "Y",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct Pairing.G1Point",
+								"name": "c",
+								"type": "tuple"
+							}
+						],
+						"internalType": "struct Verifier.Proof",
+						"name": "proof",
+						"type": "tuple"
+					}
+				],
+				"name": "verifyWinning",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"verifier.sol": "Verifier"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"verifier.sol": {
+			"keccak256": "0x8d7b57f5ddbf6e18f09a44e2ae4073588303295a6f16373f1c8c2dedc4b14951",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d212f1afe7259deebeea55e7dbc1adda5017439a078612e09ced9883d0cc93de",
+				"dweb:/ipfs/QmTn43dPFAjquNsWw5PN8hWhHAG8fAA9gAuujphRyApbJX"
+			]
+		}
+	},
+	"version": 1
+}
