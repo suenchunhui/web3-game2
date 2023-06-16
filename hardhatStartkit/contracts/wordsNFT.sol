@@ -51,7 +51,8 @@ contract wordsNFT is ERC1155Burnable, Ownable
    }
 
     function superMintTo(address _receiver, uint256 _id , uint256 _amount) public payable{
-         _mint(_receiver, _id, _amount, "TEST");
+        require(msg.sender == owner);
+        _mint(_receiver, _id, _amount, "TEST");
     }
 
     function produceSong(uint256[] memory ids) public {
