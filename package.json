@@ -26,9 +26,11 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.5",
     "ethers": "^5.7.2",
+    "eventsource-parser": "^1.0.0",
     "faker": "^6.6.6",
     "framer-motion": "^10.12.16",
     "next": "13.4.5",
+    "openai": "^3.3.0",
     "pixi.js": "^7.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -39,6 +41,7 @@
     "web3-eth-contract": "^4.0.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2"
+    "@faker-js/faker": "^8.0.2",
+    "@types/react": "18.2.12"
   }
 }
