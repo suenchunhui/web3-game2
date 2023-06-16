@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import Modal from 'react-modal';
 import { FaSpinner } from 'react-icons/fa';
+import { Center, Square, Circle } from '@chakra-ui/react'
+
+
 const customStyles = {
     content: {
         top: '50%',
@@ -94,10 +97,14 @@ export default function mintpage(props) {
                                 display="inline-block"
                                 overflow="hidden" >
                                 <CardHeader>
+                                    <Center> 
                                     <Image borderRadius='10%' src={'https://media.tenor.com/lcuvD0zkFNMAAAAM/question-mark.gif'} boxsize='200px' alt='placeholder' />
-                                    <Heading size='md' className={"my-4"}> Random Words NFT</Heading>
-                                    <Text>Mint Words NFTs to compose a SongNFT</Text>
-
+                                    </Center>
+                                    <Center>
+                                    <Heading size='md' className={"my-4"}> ERC-1155 Random Words NFT</Heading>
+                                    </Center>
+                                    <Text>What Songs will you compose with those words ?</Text>
+                                    
                                 </CardHeader>
 
                             </Card>
