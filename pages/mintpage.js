@@ -114,7 +114,9 @@ export default function Mintpage(props) {
                         </SimpleGrid>
                         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
                             <h2>Transaction Hash:</h2>
-                            <p>{txHash}</p>
+                            <a href={txHash} target={"_blank"}><u>{txHash}</u></a>
+                            <br/>
+                            <br/>
                             <button onClick={closeModal}>Close</button>
                         </Modal>
                     </Box>
