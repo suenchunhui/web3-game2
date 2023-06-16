@@ -57,11 +57,11 @@ export default function Mintpage(props) {
 
     async function mintNFT(_localProvider) {
         console.log(provider)
-        let woddsNFT = await createContract(woddsABI.abi, woddsABI.address)
+        let wordsNFT = await createContract(woddsABI.abi, woddsABI.address)
         setloadingTX(true)
         //const web3 = new Web3(_localProvider);
         // let woddsNFT = new web3.eth.Contract(woddsABI.abi, woddsABI.address)
-        let tx = await woddsNFT.methods.payToMint().send({ from: userAddress });
+        let tx = await wordsNFT.methods.payToMint().send({ from: userAddress, value: "10000000000000000" });
         console.log(tx)
         setTxHash(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
         // Open the modal
