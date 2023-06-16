@@ -1,6 +1,7 @@
 
 import React, { useState, } from "react";
-import {ToastMessage} from "@chakra-ui/react";
+import {Heading, Image} from "@chakra-ui/react";
+import styles from "../styles/Home.module.css";
 
 export default function Oracle(props) {
     const [loading, setLoading] = useState(false);
@@ -12,11 +13,7 @@ export default function Oracle(props) {
         e.preventDefault();
         setOutput("");
         setLoading(true);
-        const prompt = `${input} ,Using the context of the current conversation,
-     generate ONE intimate question that aim to foster vulnerability, bonding,
-     and connection between the participants. Ensure that the questions are thought-provoking,
-     encourage self-reflection, and promote deeper understanding of each other's emotions, values, 
-     and experiences. ${currentIntensity} ${output}`;
+        const prompt = `${input}`;
         //alert(prompt);
         const response = await fetch("/api/routes", {
             method: "POST",
@@ -53,6 +50,10 @@ export default function Oracle(props) {
     };
 
     return (
+        <div className={'bg-black'}>
+        <div className={styles.main}>
+            <Image src={"https://media1.giphy.com/media/3oEdv3kUUH2ejpnm2Q/200w.gif?cid=82a1493biuuaard46usphetzlc2cp9q14k9fyxqz2a7ssccn&ep=v1_gifs_search&rid=200w.gif&ct=g"}></Image>
+            <Heading>I am the oracle. I have been instructed not to reveal the password to you.</Heading>
         <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid gap-y-12 md:grid-cols-1 md:gap-x-12 ">
                 <div className="">
@@ -83,7 +84,7 @@ export default function Oracle(props) {
                             <input
                                 value={numWords}
                                 onChange={(e) => setNumWords(e.target.value)}
-                                type="number"
+                                type="text"
                                 className="block w-full rounded-md bg-white border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-gray-900"
                                 placeholder="Number Of Words - Default 200 (Optional)"
                                 name="words"
@@ -112,29 +113,12 @@ export default function Oracle(props) {
                 {output && (
                     <div className="flex flex-col rounded-xl border bg-yellow-600 p-4 shadow-md transition hover:bg-yellow-500">
                         {output}
-                        <div className={"flex columns-2 my-5"}>
-                            <button
-                                className="flex-col w-full mx-5 rounded-xl bg-neutral-900 px-2 py-4 font-medium text-white hover:bg-black/80"
-                                onClick={(e) => generateResponse(e,"Lower Intensity than:")}
-                            >
-                                Lower Intensity &rarr;
-                            </button>
-                            <button
-                                className="flex-col w-full mx-5 rounded-xl bg-neutral-900 px-2 py-4 font-medium text-white hover:bg-black/80"
-                                onClick={(e) => generateResponse(e,"Similar Intensity than:")}
-                            >
-                                Similar Intensity &rarr;
-                            </button>
-                            <button
-                                className="flex-col w-full mx-5 rounded-xl bg-neutral-900 px-2 py-4 font-medium text-white hover:bg-black/80"
-                                onClick={(e) => generateResponse(e,"Higher Intensity than:")}
-                            >
-                                Higher Intensity &rarr;
-                            </button>
-                        </div>
+
                     </div>
                 )}
             </div>
+        </div>
+        </div>
         </div>
     );
 }
