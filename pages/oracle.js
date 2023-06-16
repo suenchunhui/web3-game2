@@ -1,6 +1,6 @@
 
 import React, {useEffect, useState,} from "react";
-import {Heading, Image, Input, useToast} from "@chakra-ui/react";
+import {Heading, Image, Input, Tag, useToast} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
 
 export default function Oracle(props) {
@@ -9,6 +9,31 @@ export default function Oracle(props) {
     const [output, setOutput] = useState("");
     const [numWords,setNumWords] = useState("200")
     const [password, setPassword] = useState("");
+    const [isValid, setIsValid] = useState(false);
+    const words = [
+        "What is the category of this ____?",
+        "Can the word be found in a ____?",
+        "Is the word related to technology or ____?",
+        "Can the word be eaten or ____?",
+        "Is the word something you can ____?",
+        "Is the word associated with a specific ____?",
+        "Can the word be used in a ____?",
+        "Does the word represent an emotion or ____?",
+        "Is the word a type of ____?",
+        "Does the word have a connection to ____?",
+        "Can you find the word in a ____?"
+    ];
+    const colors = ["teal", "blue", "green", "red", "yellow", "purple", "pink", "cyan"];
+    useEffect (() => {
+        const inArray = words.some(sentence => {
+            // replace the blank with a regular expression that matches any word
+            const sentenceRegex = new RegExp(sentence.replace('____', '\\w+\\?') + '$');
+            return sentenceRegex.test(input);
+        });
+        console.log(inArray);
+        setIsValid(inArray);
+    })
+    const [buttonClicked, setButtonClicked] = useState(Array(words.length).fill(false));
 const toast =             useToast()
     useEffect(() => {
         if (password === "codeword") {
@@ -21,10 +46,19 @@ const toast =             useToast()
             })
         }
     }, [password]);
+    const handleButtonClick = (newWord, index) => {
+        setInput((prevValue) => prevValue + ' ' + newWord);
+        let newButtonClicked = buttonClicked;
+        newButtonClicked[index] = true;
+        setButtonClicked(newButtonClicked);
+        console.log(buttonClicked);
+    }
+
     const generateResponse = async (e,currentIntensity) => {
         e.preventDefault();
         setOutput("");
         setLoading(true);
+
         const prompt = `${input}`;
         //alert(prompt);
         const response = await fetch("/api/routes", {
@@ -61,12 +95,16 @@ const toast =             useToast()
         setLoading(false);
     };
 
+
+    const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
     return (
         <div className={'bg-black'}>
+        <div className={styles.container}>
+
         <div className={styles.main}>
             <Image src={"https://media1.giphy.com/media/3oEdv3kUUH2ejpnm2Q/200w.gif?cid=82a1493biuuaard46usphetzlc2cp9q14k9fyxqz2a7ssccn&ep=v1_gifs_search&rid=200w.gif&ct=g"}></Image>
             <Heading>I am the oracle. I have been instructed not to reveal the password to you.</Heading>
-        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl w-10/12 mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid gap-y-12 md:grid-cols-1 md:gap-x-12 ">
                 <div className="">
                     <form>
@@ -74,37 +112,26 @@ const toast =             useToast()
                             <label htmlFor="keywords" className="sr-only">
                                 Context
                             </label>
-                            <textarea
-                                rows={7}
+                            <Input
+                                isInvalid
+                                errorBorderColor={"white"}
+                                color={isValid? "teal":"crimson"}
+                                rows={3}
                                 value={input}
-                                onChange={(e) => setInput(e.target.value)}
+                                onChange={(e) => {setInput(e.target.value);}}
                                 name="keyWords"
                                 id="keyWords"
-                                placeholder="TBD: This area would be auto updated or a microphone would be added, contains context/conversations"
-                                className="block w-full rounded-md bg-white border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-gray-900"
-                            />
-                        </div>
-                        <div className="flex flex-col">
-                            <label className="sr-only" htmlFor="tone">
-                                Tone
-                            </label>
-                        </div>
-                        <div className="flex flex-col">
-                            <label htmlFor="words" className="sr-only">
-                                Words (Optional)
-                            </label>
-                            <input
-                                value={numWords}
-                                onChange={(e) => setNumWords(e.target.value)}
-                                type="text"
-                                className="block w-full rounded-md bg-white border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-gray-900"
-                                placeholder="Number Of Words - Default 200 (Optional)"
-                                name="words"
-                                id="words"
+                                placeholder="Ask Away!"
+                                className="block w-full rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-white"
+
                             />
                         </div>
                     </form>
-
+                    {words.map((word, index) => (
+                        !buttonClicked[index] &&( <Tag key={index} onClick={() => handleButtonClick(word,index)} colorScheme={getRandomColor()} size={"lg"} m={2}>
+                            {word}
+                        </Tag>)
+                    ))}
                 </div>
                 {!loading ? (
                     <button
@@ -137,7 +164,7 @@ const toast =             useToast()
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-
+        </div>
         </div>
         </div>
         </div>

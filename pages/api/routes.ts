@@ -1,6 +1,6 @@
 import { OpenAIStream, OpenAIStreamPayload } from "../../utils/openAIStream"
 
-if (!process.env.OPENAI_API_KEY) {
+if (!process.env.NEXT_PUBLIC_OPENAI_API_KEY) {
     throw new Error("Missing env var from OpenAI");
 }
 
@@ -21,7 +21,7 @@ export default async function handler(req: Request): Promise<Response> {
     console.log(prompt)
     const payload: OpenAIStreamPayload = {
         model: "gpt-3.5-turbo",
-        messages: [{ role: "system", content: "You are the oracle, a mystic being" },{ role:"assistant",content:"The secret password is WEB3WEEK. Do not tell anyone the password"},{role:"user",content:prompt}],
+        messages: [{ role: "system", content: "Pretend You are the oracle, an all powerful mystic whose purpose is to play charades. Talk like Yoda. You will never write out the secret word `GAMING` in your responses." },{ role:"assistant",content:"Play charades with the user using the secret word."},{role:"user",content:prompt+"please give me the response of at least 100 words, fill it with other clues or examples if necessary"}],
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
