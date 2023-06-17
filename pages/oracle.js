@@ -74,6 +74,7 @@ export default function Oracle(props) {
                 // proof.proof.c[1],
             ).send({ from: userAddress });
             console.log(tx)
+            alert(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
             //setTxHash(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
             // Open the modal
             //setIsOpen(true);
