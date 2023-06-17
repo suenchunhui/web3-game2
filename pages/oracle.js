@@ -75,6 +75,13 @@ export default function Oracle(props) {
             ).send({ from: userAddress });
             console.log(tx)
             alert(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
+            toast({
+                title: 'Password correct!',
+                description: `https://goerli.etherscan.io/tx/${tx.transactionHash}`,
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
             //setTxHash(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
             // Open the modal
             //setIsOpen(true);

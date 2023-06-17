@@ -52,7 +52,6 @@ export default function Browse(props) {
                                     <Th>Rank</Th>
                                     <Th>Name</Th>
                                     <Th>Address</Th>
-                                    <Th>Score</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -64,7 +63,6 @@ export default function Browse(props) {
                                         <Td>{index+1}</Td>
                                         <Td>{user}</Td>
                                         <Td>{address}</Td>
-                                        <Td>{score}</Td>
                                     </Tr>
                                 ))}
                             </Tbody>
