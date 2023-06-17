@@ -38,7 +38,8 @@
     "react-modal": "^3.16.1",
     "tailwindcss": "^1.9.6",
     "web3": "^1.8.2",
-    "web3-eth-contract": "^4.0.1"
+    "web3-eth-contract": "^4.0.1",
+    "zokrates-js": "^1.1.8"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
