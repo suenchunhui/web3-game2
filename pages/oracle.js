@@ -74,9 +74,9 @@ export default function Oracle(props) {
                 // proof.proof.c[1],
             ).send({ from: userAddress });
             console.log(tx)
-            alert(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
+            // alert(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
             toast({
-                title: 'Password correct!',
+                title: 'Transaction Process',
                 description: `https://goerli.etherscan.io/tx/${tx.transactionHash}`,
                 status: 'success',
                 duration: 9000,
