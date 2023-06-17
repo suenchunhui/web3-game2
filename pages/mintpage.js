@@ -120,8 +120,8 @@ export default function Mintpage(props) {
                             <br />
                             <a href={txHash} target={"_blank"}><u>{txHash}</u></a>
                             <br />
-                            <br />
-                            <a href={`https://testnets.opensea.io/assets/goerli/0x9289843C18ce1F09A79dc3786B81fc06459Be3b0`} target={"_blank"}><u>View on OpenSea</u></a>
+                            <br /> 
+                            <a href={`https://testnets.opensea.io/${userAddress}?search[collections][0]=unidentified-contract-30309`} target={"_blank"}><u>View on OpenSea</u></a>
                             <br />
                             <br />
                             <button onClick={closeModal}>Close</button>
