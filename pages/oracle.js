@@ -7,7 +7,7 @@ import { initialize } from "zokrates-js";
 import leaderboardABI from "../ABI/leaderboard_mock.json";
 import artifactAbi from "../public/zk/artifact_abi.json";
 import { useWeb3Auth } from "../context/web3auth";
-import fs from "fs";
+//import fs from "fs";
 
 export default function Oracle(props) {
     const [loading, setLoading] = useState(false);
