@@ -78,8 +78,7 @@ const MenuLinks = ({ isOpen }) => {
                 <MenuItem to="/mintpage">Mint Words</MenuItem>
                 <MenuItem to="/oracle">Guess the password</MenuItem>
                 <MenuItem to="/displayNFT">Display NFT</MenuItem>
-
-                <Main></Main>
+                <Main className={"relative top-0"}></Main>
             </Stack>
         </Box>
     );
