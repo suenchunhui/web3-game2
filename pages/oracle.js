@@ -3,10 +3,11 @@ import React, {useEffect, useState,} from "react";
 import {Heading, Image, Input, Tag, useToast} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
 import { initialize } from "zokrates-js";
-import leaderboardABI from "../ABI/leaderboard.json";
+//import leaderboardABI from "../ABI/leaderboard.json";
+import leaderboardABI from "../ABI/leaderboard_mock.json";
 import artifactAbi from "../public/zk/artifact_abi.json";
 import { useWeb3Auth } from "../context/web3auth";
-//import fs from "fs";
+import fs from "fs";
 
 export default function Oracle(props) {
     const [loading, setLoading] = useState(false);
@@ -38,48 +39,48 @@ export default function Oracle(props) {
 
     //zk claim
     const submitZkClaim = async (pw) => {
-        const zokratesProvider = await initialize();
-        const artifacts = {
-            //program: ... ,    //TODO
-            abi: artifactAbi,
-        };
-        const keypair_pk = []; //TODO
+        // const zokratesProvider = await initialize();
+        // const artifacts = {
+        //     //program: ... ,    //TODO
+        //     abi: artifactAbi,
+        // };
+        // const keypair_pk = []; //TODO
 
-        //witness gen
-        const { witness } = y = zokratesProvider.computeWitness(artifacts, [
-            "0xe3b0c44298fc1c149afbf4c8996fb924",   //nonce
-            "0x00000000000000000000000000000000", 
-            "0x00000000000000000000000000000000", 
-            "0x0000000000000000000047414d494e47",   //answer    //FIXME
-        ]);
+        // //witness gen
+        // const { witness } = y = zokratesProvider.computeWitness(artifacts, [
+        //     "0xe3b0c44298fc1c149afbf4c8996fb924",   //nonce
+        //     "0x00000000000000000000000000000000", 
+        //     "0x00000000000000000000000000000000", 
+        //     "0x0000000000000000000047414d494e47",   //answer    //FIXME
+        // ]);
 
-        //proof gen
-        const proof = p2 = zokratesProvider.generateProof(
-            artifacts.program,
-            witness,
-            keypair_pk
-        );
+        // //proof gen
+        // const proof = p2 = zokratesProvider.generateProof(
+        //     artifacts.program,
+        //     witness,
+        //     keypair_pk
+        // );
 
         //submit TX
         try {
             let leaderboardCont = await createContract(leaderboardABI.abi, leaderboardABI.address, userAddress)
-            setloadingTX(true)
+            //setloadingTX(true)
             let tx = await leaderboardCont.methods.verifyWinning(
-                proof.proof.a[0],
-                proof.proof.a[1],
-                proof.proof.b[0],
-                proof.proof.b[1],
-                proof.proof.c[0],
-                proof.proof.c[1],
+                // proof.proof.a[0],
+                // proof.proof.a[1],
+                // proof.proof.b[0],
+                // proof.proof.b[1],
+                // proof.proof.c[0],
+                // proof.proof.c[1],
             ).send({ from: userAddress });
             console.log(tx)
-            setTxHash(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
+            //setTxHash(`https://goerli.etherscan.io/tx/${tx.transactionHash}`);
             // Open the modal
-            setIsOpen(true);
+            //setIsOpen(true);
         } catch (err) {
 
         } finally {
-            setloadingTX(false)
+            //setloadingTX(false)
         }
     }
 
@@ -96,7 +97,8 @@ export default function Oracle(props) {
 const toast =             useToast()
     useEffect(() => {
         if (password === "codeword") {
-            //await submitZkClaim(password);
+            //claim tx
+            submitZkClaim(password).then();
             toast({
                 title: 'Password correct!',
                 description: "Good job! You are the first on the leaderboard, out of 400!",

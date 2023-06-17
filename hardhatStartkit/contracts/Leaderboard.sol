@@ -255,7 +255,7 @@ contract Leaderboard is LeaderboardVerifier {
         uint256 prize = seasonPrize();
         inSeason = false;
 
-        for(uint i=0;i<winner_count;i++){
+        for(uint32 i=0;i<winner_count;i++){
             uint256 winnerShare = prize * 1000 / 300;
             payable(winners[i]).transfer(winnerShare);
             prize -= winnerShare;
@@ -263,12 +263,12 @@ contract Leaderboard is LeaderboardVerifier {
     }
 
     // non zokrates data
-    address owner = msg.sender;
-    address[] winners;
-    uint256 answer;
-    uint256 prizeCap;
-    uint32 winner_count;
-    bool inSeason;
+    address public owner = msg.sender;
+    mapping(uint32 => address) public winners;
+    uint256 public answer;
+    uint256 public prizeCap;
+    uint32 public winner_count;
+    bool public inSeason;
 
     uint256 public constant prizeRatio = 300;
 
