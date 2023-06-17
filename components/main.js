@@ -27,7 +27,7 @@ const Main = () => {
           Log Out
         </button>
         <p disabled={isLoading} className="rounded-full inline-flex items-center h-10 px-5 text-green-100 transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-800">
-          <p>{userAddress}</p>
+          <p>{userAddress.slice(0, 8)}</p>
         </p>
 
       </div>
