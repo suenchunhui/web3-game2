@@ -96,7 +96,7 @@ export default function Oracle(props) {
     const [buttonClicked, setButtonClicked] = useState(Array(words.length).fill(false));
 const toast =             useToast()
     useEffect(() => {
-        if (password === "codeword") {
+        if (password === "gaming") {
             //claim tx
             submitZkClaim(password).then();
             toast({
